@@ -1,0 +1,1 @@
+# Sistema_de_Monitoramento_Energ-tico-ESP32_SERS_GS.2
