@@ -1,5 +1,0 @@
-Exemplo de saída esperada no Serial Monitor (115200 baud):
-
-Leitura LDR: 780 | Nível: BAIXO
-Leitura LDR: 1650 | Nível: MÉDIO
-Leitura LDR: 3200 | Nível: ALTO
