@@ -1,136 +1,129 @@
-# Sistema_de_Monitoramento_Energético-ESP32_SERS_GS.2
+# Monitoramento Termo-Humidade com ESP32 – SERS GS
+
+## Integrantes
 
 
-## **Monitoramento de Energia Luminosa com ESP32 e Sensor LDR**
+Luiz Miguel Martin Crocco – RM: 562796
 
-### **Integrantes**
-
-* **Luiz Miguel Martin Crocco - RM: 562796**
-* **Rafael Louzã Lopes - RM: 564963**
----
-
-## **1. Introdução**
-
-O monitoramento da intensidade luminosa em ambientes internos constitui uma etapa fundamental para o desenvolvimento de soluções voltadas à eficiência energética. A adequação dos níveis de iluminação impacta diretamente o conforto visual, o consumo elétrico e a qualidade das atividades laborais. Nesse contexto, este projeto apresenta um sistema embarcado baseado no microcontrolador **ESP32**, empregando um sensor **LDR (Light Dependent Resistor)** para mensurar variações de luminosidade e interpretar essas medições em tempo real.
-
-A proposta visa demonstrar, por meio de uma arquitetura simples e de baixo custo, como dispositivos IoT podem apoiar estratégias de gestão inteligente de energia, especialmente em ambientes corporativos, produtivos ou educativos.
+Rafael Louzã Lopes – RM: 564963
 
 ---
 
-## **2. Materiais Utilizados**
+## 1. Introdução
 
-* ESP32 DevKit (modelo padrão)
-* Sensor LDR para detecção de intensidade luminosa
-* Resistores para montagem do divisor de tensão
-* Três LEDs indicadores
+O controle de temperatura e umidade em ambientes internos é crucial para o conforto humano, a conservação de equipamentos e a eficiência energética. As variações térmicas influenciam diretamente o consumo de climatização, enquanto a umidade inadequada pode deteriorar materiais e comprometer a saúde.  
 
-  * Vermelho: baixa luminosidade
-  * Amarelo: luminosidade intermediária
-  * Verde: alta luminosidade
-* Resistores de 220 Ω para proteção dos LEDs
-* Ambiente de simulação **Wokwi**
+Este projeto apresenta um sistema embarcado baseado no microcontrolador **ESP32** e no sensor **DHT22**, capaz de medir **temperatura** e **umidade relativa** do ar em tempo real. A proposta demonstra como plataformas de Internet das Coisas (IoT) podem ser empregadas para desenvolver soluções acessíveis de monitoramento ambiental, promovendo ambientes mais sustentáveis.
 
 ---
 
-## **3. Descrição dos Dados**
+## 2. Componentes Utilizados
 
-As medições utilizadas neste sistema são obtidas diretamente do sensor LDR, cujo comportamento resistivo varia conforme a quantidade de luz incidente. O ESP32 realiza leituras analógicas (intervalo de 0 a 4095) que são convertidas em níveis categóricos de iluminação. Tais registros permitem avaliar, de forma contínua, o comportamento da luminosidade no ambiente monitorado.
-
-**Fonte dos dados:** leituras em tempo real provenientes do sensor LDR conectado ao microcontrolador.
-
----
-
-## **4. Objetivo do Sistema**
-
-O projeto tem como finalidade:
-
-* **Analisar o nível de energia luminosa disponível no ambiente;**
-* **Identificar potenciais situações de desperdício ou insuficiência de iluminação;**
-* **Fornecer um modelo inicial para sistemas de automação voltados à redução de consumo energético.**
-
-Ao traduzir o valor analógico em três faixas interpretativas (baixa, média e alta luminosidade), a solução cria uma base objetiva para tomadas de decisão e futuras melhorias arquiteturais.
+- **ESP32 DevKit V1** – microcontrolador Wi-Fi/Bluetooth responsável pelo processamento das leituras.  
+- **Sensor DHT22** – sensor digital que mede temperatura e umidade com boa precisão.  
+- **3 LEDs indicadores** – representando níveis de temperatura:  
+  - **Azul** → Temperatura baixa (ex.: abaixo de 20 °C)  
+  - **Verde** → Temperatura confortável (20–27 °C)  
+  - **Vermelho** → Temperatura elevada (acima de 27 °C)  
+- **Resistores de 220 Ω** para os LEDs.  
+- **Jumpers e protoboard**.  
+- **Ambiente de simulação Wokwi**.
 
 ---
 
-## **5. Funcionamento da Solução**
+## 3. Dados Coletados
 
-O funcionamento do sistema segue as etapas:
+O sistema coleta, a cada intervalo definido, os valores de **temperatura** (em graus Celsius) e **umidade relativa** (%) fornecidos pelo DHT22.  
+O ESP32 converte esses dados em leituras digitais e aplica uma lógica de classificação sobre a temperatura para acionar os LEDs.
 
-1. O sensor LDR registra a intensidade da luz no ambiente.
-2. O ESP32 realiza a leitura analógica do valor proveniente do divisor resistivo.
-3. O microcontrolador categoriza o nível de luminosidade em três classes:
-
-   * **Baixa** → LED vermelho aceso
-   * **Moderada** → LED amarelo aceso
-   * **Elevada** → LED verde aceso
-4. As informações são exibidas no Serial Monitor, possibilitando análise em tempo real.
-
-A arquitetura foi validada tanto em ambiente simulado quanto em um dispositivo ESP32 físico.
+**Fonte dos dados:** leituras em tempo real realizadas pelo sensor DHT22.
 
 ---
 
-## **6. Código-Fonte**
+## 4. Objetivo do Sistema
 
-O código responsável pelo processamento está localizado em:
-
-> `/codigo/luminosidade_esp32.ino`
-
-Ele contempla:
-
-* Leitura analógica contínua
-* Definição dos intervalos de luminosidade
-* Acionamento dos LEDs conforme a classificação
-* Registro dos valores no terminal serial
+- **Monitorar continuamente a temperatura e a umidade** de um ambiente interno.
+- **Identificar condições de temperatura baixa, confortável ou alta**, utilizando LEDs como indicadores visuais.
+- **Demonstrar a aplicação de IoT** em cenários de gestão ambiental e eficiência energética.
 
 ---
 
-## **7. Simulação no Wokwi**
+## 5. Funcionamento
 
-A pasta `/simulacao/` contém:
-
-* `serial_monitor`
-* `diagram.json`
-
-Para executar:
-
-1. Acesse **[https://wokwi.com](https://wokwi.com)**
-2. Abra o projeto correspondente
-3. Inicie a simulação
-4. Ajuste o valor do sensor LDR na interface
-5. Observe a reação dos LEDs e a leitura no monitor serial
+1. O sensor DHT22 é consultado periodicamente pelo ESP32 para obter a temperatura e a umidade.  
+2. O valor de temperatura é comparado com dois limiares pré-definidos (20 °C e 27 °C).  
+3. Dependendo da faixa de temperatura, um dos LEDs é acionado:  
+   - **Azul** → temperatura baixa.  
+   - **Verde** → temperatura confortável.  
+   - **Vermelho** → temperatura elevada.  
+4. A temperatura e a umidade lidas, bem como a classificação da faixa térmica, são impressas no **Serial Monitor**.  
+5. O sistema funciona tanto em simulação (Wokwi) quanto em um dispositivo ESP32 real.
 
 ---
 
-## **8. Execução no Dispositivo Físico**
+## 6. Código do Projeto
 
-1. Abra o arquivo `.ino` no Arduino IDE ou PlatformIO
-2. Selecione a placa **ESP32 DevKit V1**
-3. Compile e faça o upload
-4. Configure o Serial Monitor em **115200 baud**
-5. Varie a luminosidade e observe os indicadores
+O código principal está em:
 
----
+```
+/ codigo / termo_humidade_esp32.ino
+```
 
-## **9. Relação com o Futuro do Trabalho**
+Ele realiza:
 
-A crescente digitalização dos ambientes laborais reforça a importância de mecanismos automáticos de monitoramento e gestão de recursos. A iluminação, apesar de parecer um elemento trivial, é um dos componentes mais relevantes dos gastos energéticos em empresas, instituições de ensino e setores industriais.
-
-O uso combinado de sensores e microcontroladores, como o LDR e o ESP32, oferece uma alternativa acessível para o desenvolvimento de sistemas de controle baseados em dados. A partir dessas medições, é possível:
-
-* Implementar rotinas automáticas que ajustem a iluminação conforme a necessidade real;
-* Reduzir custos operacionais e impactos ambientais;
-* Incrementar o conforto visual e a ergonomia dos colaboradores;
-* Integrar informações com plataformas mais amplas de smart buildings;
-* Criar soluções educacionais e protótipos em IoT para o contexto do futuro do trabalho.
-
-Esse tipo de monitoramento ilustra como tecnologias emergentes podem transformar práticas cotidianas em iniciativas sustentáveis e eficientes.
+- Inicialização do sensor DHT22.  
+- Leitura periódica de temperatura e umidade.  
+- Classificação da temperatura em três faixas.  
+- Acionamento dos LEDs correspondentes.  
+- Impressão dos valores e da faixa no Serial Monitor.
 
 ---
 
-## **10. Conclusão**
+## 7. Simulação no Wokwi
 
-O sistema desenvolvido demonstra, de maneira objetiva e prática, que a aplicação de microcontroladores e sensores simples é suficiente para estabelecer uma estrutura eficiente de acompanhamento da energia luminosa em ambientes internos. A análise contínua dos níveis de iluminação contribui tanto para a redução de desperdícios quanto para melhorias na experiência dos usuários.
+A pasta `simulacao` contém:
 
-Embora se trate de uma solução introdutória, sua escalabilidade é evidente: ela pode ser expandida para sistemas integrados de automação predial, conectada a fontes de energia renovável ou adaptada para processos industriais. Desse modo, o projeto evidencia o papel crucial da Internet das Coisas na construção de espaços mais inteligentes, sustentáveis e alinhados às demandas do futuro do trabalho.
+- `diagram.json` – descrição do circuito (ESP32, DHT22, LEDs) para importação no Wokwi.  
+- `serial_monitor` – exemplo de saída do Serial Monitor.
 
+### Como executar a simulação:
 
+1. Acesse **https://wokwi.com** e crie um projeto baseado em ESP32.  
+2. No editor do Wokwi, importe o conteúdo de `diagram.json` para montar o circuito.  
+3. Copie o código de `termo_humidade_esp32.ino` para o editor de código do Wokwi.  
+4. Clique em **Run** para iniciar a simulação.  
+5. Observe a leitura de temperatura e umidade e o acendimento dos LEDs de acordo com a classificação.
+
+---
+
+## 8. Execução no Dispositivo Real
+
+1. Abra o arquivo `.ino` no **Arduino IDE** ou **PlatformIO**.  
+2. Selecione a placa **ESP32 DevKit V1**.  
+3. Instale a biblioteca **DHT sensor library** (if needed).  
+4. Conecte o sensor DHT22 ao ESP32:  
+   - **VCC** → 3.3 V  
+   - **DATA** → GPIO 15 (ou outro definido no código)  
+   - **GND** → GND  
+5. Conecte os LEDs aos GPIOs indicados no código (com resistores apropriados).  
+6. Faça o upload do código para a placa.  
+7. Abra o Serial Monitor em **115200 baud** e observe as leituras de temperatura e umidade, bem como o LED que é acionado.
+
+---
+
+## 9. Conexão com o Futuro do Trabalho
+
+O monitoramento inteligente de condições ambientais é uma tendência nas estratégias de sustentabilidade corporativa.  
+Ambientes com controle adequado de temperatura e umidade contribuem para a **eficiência energética**, reduzem custos de climatização e melhoram o bem-estar das pessoas.  
+O uso de **microcontroladores como o ESP32** e **sensores ambientais** permite coletar dados precisos, acionando sistemas de automação ou emitindo alertas, integrando-se a plataformas de **smart building** e **climatização inteligente**.  
+
+Ao adotar tecnologias IoT para acompanhar parâmetros como temperatura e umidade, empresas podem otimizar o uso de recursos, melhorar a qualidade do ambiente de trabalho e alinhar-se a práticas de responsabilidade ambiental, pilares fundamentais do futuro do trabalho.
+
+---
+
+## 10. Conclusão
+
+Este projeto propõe e implementa um sistema de monitoramento termo‑humidímetro baseado em ESP32 e sensor DHT22.  
+A solução demonstra, de maneira simples e eficaz, como é possível construir uma plataforma de IoT para acompanhar condições ambientais em tempo real, categorizar a temperatura em níveis críticos e fornecer feedback visual imediato.  
+
+Embora seja um protótipo inicial, o projeto pode ser expandido para integrar interfaces web, armazenamento de dados em nuvem e algoritmos de controle automático de climatização, consolidando-se como um componente essencial de ambientes inteligentes e sustentáveis.
