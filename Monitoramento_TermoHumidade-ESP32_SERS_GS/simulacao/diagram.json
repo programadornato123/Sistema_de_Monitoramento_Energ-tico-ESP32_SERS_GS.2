@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "author": "Monitoramento Termo-Humidade ESP32",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-v1",
+      "id": "esp32",
+      "top": 0,
+      "left": 0
+    },
+    {
+      "type": "dht22",
+      "id": "dht1",
+      "top": -80,
+      "left": 60
+    },
+    {
+      "type": "led",
+      "id": "ledLow",
+      "top": 40,
+      "left": -80,
+      "attrs": {
+        "color": "blue"
+      }
+    },
+    {
+      "type": "led",
+      "id": "ledMid",
+      "top": 40,
+      "left": 0,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "led",
+      "id": "ledHigh",
+      "top": 40,
+      "left": 80,
+      "attrs": {
+        "color": "red"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "dht1:VCC",
+      "esp32:3V3"
+    ],
+    [
+      "dht1:GND",
+      "esp32:GND"
+    ],
+    [
+      "dht1:DATA",
+      "esp32:15"
+    ],
+    [
+      "ledLow:A",
+      "esp32:25"
+    ],
+    [
+      "ledLow:C",
+      "esp32:GND"
+    ],
+    [
+      "ledMid:A",
+      "esp32:26"
+    ],
+    [
+      "ledMid:C",
+      "esp32:GND"
+    ],
+    [
+      "ledHigh:A",
+      "esp32:27"
+    ],
+    [
+      "ledHigh:C",
+      "esp32:GND"
+    ]
+  ]
+}

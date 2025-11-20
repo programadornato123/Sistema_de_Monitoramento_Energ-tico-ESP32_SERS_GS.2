@@ -1,0 +1,5 @@
+Exemplo de saída no Serial Monitor (115200 baud):
+
+Temperatura: 18.5 °C | Umidade: 50.0 % | Faixa: BAIXA
+Temperatura: 24.0 °C | Umidade: 45.3 % | Faixa: CONFORTÁVEL
+Temperatura: 29.2 °C | Umidade: 40.1 % | Faixa: ALTA
